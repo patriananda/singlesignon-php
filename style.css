@@ -71,6 +71,12 @@ input:-webkit-autofill:active {
   font-weight: bold;
 }
 
+.title3 {
+  font-size: 30px;
+  color: #1bceba;
+  font-weight: bold;
+}
+
 hr {
   margin: 10px 0;
   background-color: #1bceba;
@@ -78,12 +84,14 @@ hr {
   height: 2px;
 }
 
-.sub {
+.sub,
+.user {
   font-size: 11.5px;
   color: #606060;
   line-height: 1.75em;
   font-weight: bolder;
   margin: 0;
+  text-align: left;
 }
 
 .container {
@@ -141,4 +149,38 @@ body {
     top: 100px;
     opacity: 100%;
   }
+}
+
+table {
+  width: 100%;
+  margin-top: 15px;
+}
+
+td {
+  padding: 15px;
+  text-align: right;
+}
+
+tr {
+  cursor: pointer;
+}
+
+tr:hover {
+  background-color: #e0e0e0;
+}
+
+.so {
+  text-align: right;
+  font-weight: bold;
+  padding: 8px;
+  font-size: 11.5px;
+  background-color: #ff6b6b;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 8px 25px #ffbbbb;
+}
+
+.so:hover {
+  background-color: #f36565;
 }

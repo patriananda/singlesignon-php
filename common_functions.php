@@ -20,7 +20,6 @@ function LDAPConnection() {
 }
 
 function checkLogin() {
-    session_start();
     return isset($_SESSION['status']) && $_SESSION['status'] == "login";
 }
 
@@ -34,45 +33,47 @@ function checkLDAP() {
     if ($data['count'] <= 0) {
         return false;
     }
-
+    
+    $count = 0;
     foreach ($data as $index => $value) {
-        if ($index == 'count') {
+        $splittedDN = explode(',', $value['dn']);
+        if ($index == 'count' || substr($splittedDN[0], 2) != 'connected') {
             continue;
         }
-
-        $splittedDN = explode(',', $value['dn']);
-
-        if (substr($splittedDN[0], 2) == 'connected') {
-            $username = substr($splittedDN[1], 3);
-            break;
+        
+        $count++;
+        $dnUser = substr($splittedDN[1], 3);
+        if ($count == 1) {
+            $username = $dnUser;
         }
+
+        $_SESSION['users'] []= $dnUser;
+
     }
 
     if (!$username) {
         session_destroy();
         return false;
     }
-    session_start();
-    $_SESSION['username'] = $username;
-    $_SESSION['status'] = "login";
+    // $_SESSION['username'] = $username;
+    // $_SESSION['status'] = "login";
 
     return true;
 }
 
-function destroyLDAP() {
+function destroyConnection() {
     $ldap = LDAPConnection();
-    session_start();
     ldap_delete($ldap[0], "l=connected,cn=".$_SESSION['username'].",".$ldap[1]);
     session_destroy();
 }
 
 function createLDAP() {
     $ldap = LDAPConnection();
-    $info["cn"] = "connected";
-    $info["sn"] = "connected";
     $info["objectClass"][0] = "top";
     $info["objectClass"][1] = "person";
     $info["objectClass"][2] = "inetOrgPerson";
+    $info["cn"] = "connected";
+    $info["sn"] = "connected";
     $info["l"] = "connected";
     
     ldap_add($ldap[0],"l=connected,cn=".$_SESSION['username'].",".$ldap[1],$info);

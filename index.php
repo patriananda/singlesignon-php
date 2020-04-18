@@ -1,7 +1,8 @@
 <?php
+session_start();
 include('common_functions.php');
 
-if (!checkLogin()) {
+if (!checkLogin() && !checkLDAP()) {
   header("location:./login.php");
 }
 $username = ucfirst($_SESSION['username']);
@@ -23,8 +24,10 @@ $username = ucfirst($_SESSION['username']);
         You are now signed in as <?= $username;?>, you need to sign out</br>before
         signing in as different user.
       </p>
-      <form action="logout.php">
-          <input class="signout" type="submit" name="signout" value="Sign out" />
+      <form action="auth.php" method="post">
+          <input type="hidden" name="action" value="logout" />
+          <!-- <input class="signout" type="submit" name="signout" value="Sign out" /> -->
+          <button class="signout" type="submit">Sign out</button>
       </form>
     </div>
   </body>

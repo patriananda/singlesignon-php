@@ -1,9 +1,19 @@
 <?php
+session_start();
 include('common_functions.php');
 
-if (checkLogin() || checkLDAP()) {
+// if (checkLogin() || checkLDAP()) {
+//   header("location:./index.php");
+// }
+
+if (checkLogin()) {
   header("location:./index.php");
 }
+
+if (checkLDAP()) {
+  header("location:./users.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +25,7 @@ if (checkLogin() || checkLDAP()) {
   </head>
   <body>
     <div class="container">
-      <form action="ldap.php" method="post">
+      <form action="auth.php" method="post">
         <p class="title">Welcome.</p>
         <p class="sub">
           To test single sign-on technology,<br />please sign in with your personal
@@ -50,6 +60,7 @@ if (checkLogin() || checkLDAP()) {
         }
         ?>
         <div>
+          <input type="hidden" name="action" value="loginLDAP" />
           <input type="submit" name="signin" value="Sign me in" />
         </div>
       </form>
