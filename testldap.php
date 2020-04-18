@@ -27,7 +27,7 @@ if($ldap_con) {
         $info["objectClass"][1] = "person";
         $info["objectClass"][2] = "inetOrgPerson";
         $info["l"] = "connected";
-        ldap_add($ldap_con,"l=connected,cn=Tesla,".$ldaptree,$info);
+        ldap_add($ldap_con,"l=connected,cn=Bell,".$ldaptree,$info);
         // echo ($data[0]["l"][0]);
         // SHOW ALL DATA
         echo '<h1>Dump all data</h1><pre>';

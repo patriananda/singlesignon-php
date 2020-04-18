@@ -1,5 +1,10 @@
 <?php
 session_start();
+include('common_functions.php');
+
+if (checkLogin()) {
+    header("location:./index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,24 +21,40 @@ session_start();
         you can only signed in to one user at a time.
         </p>
         <table cellspacing="0" cellpadding="0">
-            <?php foreach ($_SESSION['users'] as $username): ?>
-                <tr>
+            <?php foreach ($_SESSION['users'] as $index => $username): ?>
+                <tr onclick="submitLogin('formlogin-<?= $index;?>')">
                     <td class="user">
-                        <label for="#login"><?= $username;?></label>
+                        <?= $username;?>
+                        <form action="auth.php" method="post" id="formlogin-<?= $index;?>">
+                            <input type="hidden" name="username" value="<?= $username;?>" />
+                            <input type="hidden" name="action" value="login" />
+                        </form>
                     </td>
-                    <td><label for="#logout" class="so">Delete</label></td>
+                    <td>
+                        <label class="so" onclick="submitLogout('formlogout-<?= $index;?>')">
+                            Delete
+                        </label>
+                        <!-- <input type="submit" class="so" onclick="(function logout(){document.getElementById('formlogout-<?= $index;?>').submit();})()" /> -->
+                        <form action="auth.php" method="post" id="formlogout-<?= $index;?>">
+                            <input type="hidden" name="username" value="<?= $username;?>" />
+                            <input type="hidden" name="action" value="logoutLDAP" />
+                        </form>
+                    </td>
                 </tr>
-                <form action="auth.php" method="post">
-                    <input type="hidden" name="username" value="<?= $username?>" />
-                    <input type="hidden" name="action" value="login" />
-                    <input type="submit" id="login" style="display:none;"/>
-                </form>
-                <form action="auth.php" method="post">
-                    <input type="hidden" name="action" value="logout" />
-                    <input type="submit" id="logout" style="display:none;"/>
-                </form>
             <?php endforeach;?>
         </table>
     </div>
+    <script>
+        function submitLogin(formName) {
+            document.getElementById(formName).submit();
+        }
+        function submitLogout(formName) { 
+            if (!event) var event = window.event;                // Get the window event
+            event.cancelBubble = true;                           // IE Stop propagation
+            if (event.stopPropagation) event.stopPropagation();  // Other Broswers
+            // console.log('td clicked');
+            document.getElementById(formName).submit();
+        };
+    </script>
 </body>
 </html>

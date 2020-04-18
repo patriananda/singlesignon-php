@@ -170,6 +170,7 @@ tr:hover {
 }
 
 .so {
+  z-index: 1;
   text-align: right;
   font-weight: bold;
   padding: 8px;

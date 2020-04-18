@@ -35,6 +35,7 @@ function checkLDAP() {
     }
     
     $count = 0;
+    $_SESSION['users'] = [];
     foreach ($data as $index => $value) {
         $splittedDN = explode(',', $value['dn']);
         if ($index == 'count' || substr($splittedDN[0], 2) != 'connected') {
@@ -61,10 +62,13 @@ function checkLDAP() {
     return true;
 }
 
-function destroyConnection() {
-    $ldap = LDAPConnection();
-    ldap_delete($ldap[0], "l=connected,cn=".$_SESSION['username'].",".$ldap[1]);
+function destroyLogin() {
     session_destroy();
+}
+
+function destroyLDAP($username) {
+    $ldap = LDAPConnection();
+    ldap_delete($ldap[0], "l=connected,cn=".$username.",".$ldap[1]);
 }
 
 function createLDAP() {

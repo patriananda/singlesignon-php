@@ -8,7 +8,13 @@ session_start();
 include('common_functions.php');
 
 if ($_POST["action"] == "logout") {
-    destroyConnection();
+    destroyLDAP($_SESSION['username']);
+    destroyLogin();
+    header("location:./login.php");
+}
+
+if ($_POST["action"] == "logoutLDAP") {
+    destroyLDAP($_POST["username"]);
     header("location:./login.php");
 }
 

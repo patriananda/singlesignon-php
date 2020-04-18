@@ -2,7 +2,7 @@
 session_start();
 include('common_functions.php');
 
-if (!checkLogin() && !checkLDAP()) {
+if (!checkLogin()) {
   header("location:./login.php");
 }
 $username = ucfirst($_SESSION['username']);
@@ -26,8 +26,7 @@ $username = ucfirst($_SESSION['username']);
       </p>
       <form action="auth.php" method="post">
           <input type="hidden" name="action" value="logout" />
-          <!-- <input class="signout" type="submit" name="signout" value="Sign out" /> -->
-          <button class="signout" type="submit">Sign out</button>
+          <input class="signout" type="submit" name="signout" value="Sign out" />
       </form>
     </div>
   </body>
