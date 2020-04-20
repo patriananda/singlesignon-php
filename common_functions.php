@@ -25,39 +25,34 @@ function checkLogin() {
 
 function checkLDAP() {
     $ldap = LDAPConnection();
-    $username = '';
-    
-    $result = ldap_search($ldap[0],$ldap[1], "(|(l=connected)(uid=".getIP()."))") or die ("Error in search query: ".ldap_error($ldap[0]));
+    $result = ldap_search($ldap[0],$ldap[1], "(uid=".getIP().")") or die ("Error in search query: ".ldap_error($ldap[0]));
     $data = ldap_get_entries($ldap[0], $result);
     
     if ($data['count'] <= 0) {
         return false;
     }
     
-    $count = 0;
     $_SESSION['users'] = [];
+    
     foreach ($data as $index => $value) {
-        $splittedDN = explode(',', $value['dn']);
-        if ($index == 'count' || substr($splittedDN[0], 2) != 'connected') {
+        if ($index === 'count') {
             continue;
         }
         
-        $count++;
-        $dnUser = substr($splittedDN[1], 3);
-        if ($count == 1) {
-            $username = $dnUser;
+        $splittedDN = explode(',', $value['dn']);
+        $dnUser = substr($splittedDN[2], 3);
+        $result2 = ldap_search($ldap[0],$ldap[1], "(&(l=connected)(sn=".$dnUser."))") or die ("Error in search query: ".ldap_error($ldap[0]));
+        $data2 = ldap_get_entries($ldap[0], $result2);
+        
+        if ($data2['count'] == 1) {
+            $_SESSION['users'] []= $dnUser;
         }
-
-        $_SESSION['users'] []= $dnUser;
-
     }
 
-    if (!$username) {
+    if (count($_SESSION['users']) <= 0) {
         session_destroy();
         return false;
     }
-    // $_SESSION['username'] = $username;
-    // $_SESSION['status'] = "login";
 
     return true;
 }
@@ -77,7 +72,7 @@ function createLDAP() {
     $info["objectClass"][1] = "person";
     $info["objectClass"][2] = "inetOrgPerson";
     $info["cn"] = "connected";
-    $info["sn"] = "connected";
+    $info["sn"] = $_SESSION['username'];
     $info["l"] = "connected";
     
     ldap_add($ldap[0],"l=connected,cn=".$_SESSION['username'].",".$ldap[1],$info);

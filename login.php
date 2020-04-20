@@ -2,16 +2,8 @@
 session_start();
 include('common_functions.php');
 
-// if (checkLogin() || checkLDAP()) {
-//   header("location:./index.php");
-// }
-
 if (checkLogin()) {
   header("location:./index.php");
-}
-
-if (checkLDAP()) {
-  header("location:./users.php");
 }
 
 ?>
@@ -65,6 +57,7 @@ if (checkLDAP()) {
         </div>
       </form>
     </div>
+    <p><a href="users.php">manage users</a></p>
     <div class="snackbar"><?php echo ("IP : ".getIP())?></div>
   
   </body>

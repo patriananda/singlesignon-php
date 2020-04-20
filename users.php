@@ -5,6 +5,10 @@ include('common_functions.php');
 if (checkLogin()) {
     header("location:./index.php");
 }
+
+if (!checkLDAP()) {
+    header("location:./login.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,6 +48,7 @@ if (checkLogin()) {
             <?php endforeach;?>
         </table>
     </div>
+        <p><a href="login.php">login</a></p>
     <script>
         function submitLogin(formName) {
             document.getElementById(formName).submit();

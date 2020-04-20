@@ -17,9 +17,12 @@ if($ldap_con) {
     if ($ldapbind) {
         echo "LDAP bind successful...<br /><br />";
         
-        // $result = ldap_search($ldap_con,$ldaptree, "(uid=127.0.0.1)") or die ("Error in search query: ".ldap_error($ldap_con));
-        $result = ldap_search($ldap_con,$ldaptree, "(l=*)") or die ("Error in search query: ".ldap_error($ldap_con));
+        // $result = ldap_search($ldap_con,$ldaptree, "(l=*)") or die ("Error in search query: ".ldap_error($ldap_con));
+        $result = ldap_search($ldap_con,$ldaptree, "(uid=127.0.0.1)") or die ("Error in search query: ".ldap_error($ldap[0]));
+        $result = ldap_search($ldap_con,$ldaptree, "(&(l=connected)(sn=".$username."))") or die ("Error in search query: ".ldap_error($ldap[0]));
+        // $result = ldap_search($ldap_con,$ldaptree, "(&(l=connected)(sn=tesla))") or die ("Error in search query: ".ldap_error($ldap[0]));
         $data = ldap_get_entries($ldap_con, $result);
+        // $result = ldap_search($ldap_con,$ldaptree, "(cn=*)") or die ("Error in search query: ".ldap_error($ldap_con));
         // ldap_delete($ldap_con,"l=".$data[0]["l"][0].",cn=Tesla,".$ldaptree);
         $info["cn"] = "connected";
         $info["sn"] = "connected";
@@ -27,8 +30,9 @@ if($ldap_con) {
         $info["objectClass"][1] = "person";
         $info["objectClass"][2] = "inetOrgPerson";
         $info["l"] = "connected";
-        ldap_add($ldap_con,"l=connected,cn=Bell,".$ldaptree,$info);
-        // echo ($data[0]["l"][0]);
+        // ldap_add($ldap_con,"l=connected,cn=bell,".$ldaptree,$info);
+        // ldap_mod_del($ldap_con, $ldaptree, $data[0]["userpassword"][0]);
+        // echo ($data[0]["userpassword"][0]);
         // SHOW ALL DATA
         echo '<h1>Dump all data</h1><pre>';
         print_r($data);
