@@ -17,10 +17,10 @@ $username = ucfirst($_SESSION['username']);
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <p class="title2">Signed In.</p>
+    <div class="index-container">
+      <p class="title-index">Signed In.</p>
       <hr />
-      <p class="sub">
+      <p class="sub-title">
         You are now signed in as <?= $username;?>, you need to sign out</br>before
         signing in as different user.
       </p>

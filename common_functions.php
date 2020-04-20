@@ -27,11 +27,6 @@ function checkLDAP() {
     $ldap = LDAPConnection();
     $result = ldap_search($ldap[0],$ldap[1], "(uid=".getIP().")") or die ("Error in search query: ".ldap_error($ldap[0]));
     $data = ldap_get_entries($ldap[0], $result);
-    
-    if ($data['count'] <= 0) {
-        return false;
-    }
-    
     $_SESSION['users'] = [];
     
     foreach ($data as $index => $value) {
@@ -51,10 +46,7 @@ function checkLDAP() {
 
     if (count($_SESSION['users']) <= 0) {
         session_destroy();
-        return false;
     }
-
-    return true;
 }
 
 function destroyLogin() {

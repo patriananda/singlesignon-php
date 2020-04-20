@@ -28,12 +28,11 @@ if ($_POST["action"] == "loginLDAP") {
     $ldap_dn = "cn=".$_POST["username"].",ou=users,dc=example,dc=com";
     $ldap_password = $_POST["password"];
     $ldap = LDAPConnection();
+    
     if (ldap_bind($ldap[0], $ldap_dn, $ldap_password)) {
         $_SESSION['username'] = $_POST["username"];
         $_SESSION['status'] = "login";
         createLDAP();
-        // echo ($_SESSION['username']);
-        // die();
         header( "Location: ./index.php");
         exit();
     } else {
