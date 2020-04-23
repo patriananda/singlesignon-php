@@ -5,15 +5,15 @@
 }
 
 body {
-  transform: translate(-50%, -50%);
-  position: absolute;
   top: 50%;
   left: 50%;
+  position: absolute;
   resize: both;
   overflow: auto;
 }
 
 .index-container {
+  transform: translate(-50%, -50%);
   width: max-content;
   max-height: 250px;
   background-color: #333;
@@ -21,13 +21,13 @@ body {
   margin: 0 auto;
   padding: 30px;
   overflow: hidden;
-  box-shadow: 0 10px 30px #d0d0d0;
+  box-shadow: 0 10px 30px #9f9f9f;
 }
 
 .main-container {
+  transform: translate(-50%, -50%);
   width: max-content;
-  max-height: 310px;
-  height: 310px;
+  height: 300px;
   background-color: #333;
   position: relative;
   margin: 0 auto;
@@ -38,9 +38,10 @@ body {
 .sub-container-left {
   padding: 30px;
   float: left;
-  height: 100%;
+  height: 85%;
+  max-height: 100%;
   background-color: #478fff;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 .sub-container-right {
@@ -76,18 +77,13 @@ hr {
   height: 2px;
 }
 
-.sub-title,
-.user-list {
+.sub-title {
   font-size: 11.5px;
   color: #fff;
   line-height: 1.75em;
   font-weight: bolder;
   margin: 0;
   text-align: left;
-}
-
-.user-list {
-  color: #333;
 }
 
 .text {
@@ -135,7 +131,7 @@ input[type="submit"] {
 input[type="submit"].signin {
   position: fixed;
   right: 30px;
-  bottom: 80px;
+  bottom: 30px;
 }
 
 input[type="submit"]:hover {
@@ -159,43 +155,40 @@ input[type="submit"].signout:hover {
   color: #fc5353;
 }
 
+.footer {
+  position: fixed;
+  font-size: 14px;
+  left: 0;
+  bottom: 30px;
+  width: 100%;
+  color: #333;
+  text-align: center;
+}
+
 .snackbar {
-  visibility: visible;
-  position: relative;
-  max-width: 150px;
+  transform: translate(-50%, -80px);
+  width: fit-content;
+  font-size: 12px;
   background-color: #333;
   color: #fff;
   text-align: center;
-  border-radius: 6px;
-  padding: 15px;
-  z-index: 1;
-  top: 100px;
-  margin: 0 auto;
-  font-size: 14px;
-  animation-name: test;
-  animation-duration: 0.7s;
-}
-
-@keyframes test {
-  0% {
-    top: 120px;
-    opacity: 0;
-  }
-  100% {
-    top: 100px;
-    opacity: 100%;
-  }
+  border-radius: 20px;
+  padding: 12px 20px;
 }
 
 .user-list {
-  width: 60%;
+  font-size: 12px;
+  font-weight: bolder;
+  width: 75%;
+  margin: 0;
   margin-top: 15px;
   background-color: #f6f6f6;
   border-radius: 18px;
   cursor: pointer;
-  padding: 8px 14px;
+  color: #333;
+  padding: 10px;
+  text-align: center;
   float: left;
-  display: inline-block;
 }
 
 .user-list:hover {
@@ -203,21 +196,24 @@ input[type="submit"].signout:hover {
 }
 
 label.so {
-  margin-top: 18px;
-  font-weight: bold;
+  margin-top: 17px;
   display: block;
   float: right;
-  padding: 8px;
-  font-size: 11.5px;
+  padding: 6px 10px;
   background-color: #ff5953;
-  border-radius: 6px;
+  border-radius: 18px;
   cursor: pointer;
   color: #f6f6f6;
-  box-shadow: 0 8px 25px rgba(246, 80, 74, 0.6);
+  /* box-shadow: 0 8px 25px rgba(246, 80, 74, 0.6); */
 }
 
 label.so:hover {
   background-color: #f6504a;
+}
+
+.material-icons {
+  font-size: 10px !important;
+  font-weight: bolder !important;
 }
 
 ::-webkit-scrollbar {
@@ -227,7 +223,7 @@ label.so:hover {
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f6f6f6;
-  border-radius: 10px;
+  border-radius: 18px;
 }
 
 /* Handle */

@@ -7,23 +7,27 @@ if ($_SERVER['REQUEST_METHOD'] != "POST") {
 session_start();
 include('common_functions.php');
 
+// used in index.php line 27
 if ($_POST["action"] == "logout") {
     destroyLDAP($_SESSION['username']);
     destroyLogin();
     header("location:./login.php");
 }
 
+// used in login.php line 39
 if ($_POST["action"] == "logoutLDAP") {
     destroyLDAP($_POST["username"]);
     header("location:./login.php");
 }
 
+// used in login.php line 32
 if ($_POST["action"] == "login") {
     $_SESSION['username'] = $_POST["username"];
     $_SESSION['status'] = "login";
     header( "Location: ./index.php");
 }
 
+// used in login.php line 89
 if ($_POST["action"] == "loginLDAP") {
     $ldap_dn = "cn=".$_POST["username"].",ou=users,dc=example,dc=com";
     $ldap_password = $_POST["password"];
@@ -36,7 +40,6 @@ if ($_POST["action"] == "loginLDAP") {
         header( "Location: ./index.php");
         exit();
     } else {
-        // masih error di sini
         $_SESSION['loginerror'] = "Invalid username or password";
         header( "Location: ./login.php");
     }

@@ -2,7 +2,7 @@
 session_start();
 include('common_functions.php');
 
-if (!checkLogin()) {
+if (checkUserLDAP($_SESSION['username'])['count'] < 1 || !checkLogin()) {
   header("location:./login.php");
 }
 $username = ucfirst($_SESSION['username']);
@@ -21,13 +21,13 @@ $username = ucfirst($_SESSION['username']);
       <p class="title-index">Signed In.</p>
       <hr />
       <p class="sub-title">
-        You are now signed in as <?= $username;?>, you need to sign out</br>before
-        signing in as different user.
+        You are now signed in as <?= $username;?>, you need to sign out</br>before signing in as different user.
       </p>
       <form action="auth.php" method="post">
           <input type="hidden" name="action" value="logout" />
           <input class="signout" type="submit" name="signout" value="Sign out" />
       </form>
     </div>
+    <div class="footer">&copy; <?= date('Y'); ?> by Dimas Patriananda</div>
   </body>
 </html>

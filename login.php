@@ -16,6 +16,7 @@ checkLDAP();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manage Account or Login</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
   <body>
     <div class="main-container" style="text-align:center;">
@@ -23,16 +24,20 @@ checkLDAP();
           <p class="title-left">Manage Accounts.</p>
           <p class="sub-title">You can only signed in to one user at a time.</p>
           <div>
+          <!-- repeat based on connected users to LDAP Server-->
           <?php foreach ($_SESSION['users'] as $index => $username): ?>
+            <!-- ketika div di klik, yg disubmit adalah form dengan id yang sama. -> jalankan javascript -->
             <div class="user-list" onclick="submitLogin('formlogin-<?= $index;?>')">
+            <!-- display list connected users -->
             <?= ucfirst($username);?>
+              <!-- form buat bawa inputan (post) ketika div diklik -->
               <form action="auth.php" method="post" id="formlogin-<?= $index;?>">
                   <input type="hidden" name="username" value="<?= $username;?>" />
                   <input type="hidden" name="action" value="login" />
               </form>
             </div>
             <div>
-              <label class="so" onclick="submitLogout('formlogout-<?= $index;?>')">Delete</label>
+              <label class="so" onclick="submitLogout('formlogout-<?= $index;?>')"><i class="material-icons">close</i></label>
               <form action="auth.php" method="post" id="formlogout-<?= $index;?>">
                   <input type="hidden" name="username" value="<?= $username;?>" />
                   <input type="hidden" name="action" value="logoutLDAP" />
@@ -40,30 +45,9 @@ checkLDAP();
             </div>
           <?php endforeach;?>
           </div>
-          <!-- <table cellspacing="0" cellpadding="0" class="clickable" >
-              <?php foreach ($_SESSION['users'] as $index => $username): ?>
-                  <tr class="clickable" onclick="submitLogin('formlogin-<?= $index;?>')">
-                      <td class="user">
-                          <?= ucfirst($username);?>
-                          <form action="auth.php" method="post" id="formlogin-<?= $index;?>">
-                              <input type="hidden" name="username" value="<?= $username;?>" />
-                              <input type="hidden" name="action" value="login" />
-                          </form>
-                      </td>
-                      <td class="so">
-                          <label class="so" onclick="submitLogout('formlogout-<?= $index;?>')">
-                              Delete
-                          </label>
-                          <form action="auth.php" method="post" id="formlogout-<?= $index;?>">
-                              <input type="hidden" name="username" value="<?= $username;?>" />
-                              <input type="hidden" name="action" value="logoutLDAP" />
-                          </form>
-                      </td>
-                  </tr>
-              <?php endforeach;?>
-          </table> -->
       </div>
       <script>
+          // submit form yang ada di document/halaman ini dengan id formlogin-index line 30 untuk disubmit with javascript
           function submitLogin(formName) {
               document.getElementById(formName).submit();
           }
@@ -79,14 +63,8 @@ checkLDAP();
         <form action="auth.php" method="post">
           <p class="title-right">Welcome.</p>
           <p class="sub-title">
-            To test single sign-on technology,<br />please sign in with your personal
-            information
+            To test single sign-on technology,<br />please sign in with your personal information.
           </p>
-          <input
-            type="hidden"
-            value="<?php echo getIP(); ?>"
-            name="ip"
-          />
           <div>
             <input
               class="text"
@@ -103,6 +81,7 @@ checkLDAP();
               placeholder="Password"
             />
           </div>
+          <!-- jika session login error dan session tidak kosong, maka tampil errornya -->
           <?php if (isset($_SESSION['loginerror']) && $_SESSION['loginerror'] != ""): ?>
             <div class="warning"><label> <?php echo $_SESSION['loginerror'] ?> </label></div>
           <?php endif; ?>
@@ -115,5 +94,6 @@ checkLDAP();
       </div>
     </div>
     <div class="snackbar"><?php echo ("IP : ".getIP())?></div>
+    <div class="footer">&copy; <?= date('Y'); ?> by Dimas Patriananda</div>
   </body>
 </html>
