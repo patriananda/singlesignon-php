@@ -1,4 +1,5 @@
 <?php
+// used in line 48 below
 function getIP() {
     if(!empty($_SERVER['HTTP_CLIENT_IP'])){
         //ip from share internet
@@ -25,6 +26,7 @@ function checkLogin() {
     return isset($_SESSION['status']) && $_SESSION['status'] == "login";
 }
 
+//used in line 65 below
 function checkUserLDAP($username) {
     $ldap = LDAPConnection();
     $result = ldap_search($ldap[0],$ldap[1], "(&(l=connected)(sn=".$username."))") or die ("Error in search query: ".ldap_error($ldap[0]));
