@@ -24,8 +24,9 @@ if($ldap_con) {
         // $result = ldap_search($ldap_con,$ldaptree, "(&(l=connected)(sn=tesla))") or die ("Error in search query: ".ldap_error($ldap[0]));
         $data = ldap_get_entries($ldap_con, $result);
         // $result = ldap_search($ldap_con,$ldaptree, "(cn=*)") or die ("Error in search query: ".ldap_error($ldap_con));
-        // ldap_delete($ldap_con,"l=".$data[0]["l"][0].",cn=Tesla,".$ldaptree);
-        $username = "edison";
+        //* create entry l=connected berdasarkan username tesla
+        /*
+        $username = "tesla";
         $info["cn"] = "connected";
         $info["sn"] = $username;
         $info["objectClass"][0] = "top";
@@ -33,13 +34,25 @@ if($ldap_con) {
         $info["objectClass"][2] = "inetOrgPerson";
         $info["l"] = "connected";
         ldap_add($ldap_con,"l=connected,cn={$username},{$ldaptree}", $info);
+        */
+        $username = "hope";
+        $info["cn"] = $username;
+        $info["sn"] = $username;
+        $info["objectClass"][0] = "top";
+        $info["objectClass"][1] = "person";
+        $info["objectClass"][2] = "organizationalPerson";
+        $info["objectClass"][3] = "inetOrgPerson";
+        ldap_add($ldap_con,"cn={$username},{$ldaptree}", $info);
+        
+        // ldap_delete($ldap_con,"l=connected,cn=".$username.",".$ldaptree);
+
         // ldap_mod_del($ldap_con, $ldaptree, $data[0]["userpassword"][0]);
         // echo ($data[0]["userpassword"][0]);
         // SHOW ALL DATA
         echo '<h1>Dump all data</h1><pre>';
         print_r($data);
 
-        print_r($_SESSION['users']);
+        // print_r($_SESSION['users']);
         
         print_r($data['count'] > 0 ? 'percarian' : 'login'); // ternary operator
         // echo '</pre>';
