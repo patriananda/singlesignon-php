@@ -35,13 +35,15 @@ if($ldap_con) {
         $info["l"] = "connected";
         ldap_add($ldap_con,"l=connected,cn={$username},{$ldaptree}", $info);
         */
-        $username = "hope";
+        $username = "khotim";
         $info["cn"] = $username;
         $info["sn"] = $username;
         $info["objectClass"][0] = "top";
         $info["objectClass"][1] = "person";
         $info["objectClass"][2] = "organizationalPerson";
         $info["objectClass"][3] = "inetOrgPerson";
+        $info["userPassword"] = "abdul";
+        // $info['userPassword'] = '{MD5}'.base64_encode(pack('H*',md5("bell")));
         ldap_add($ldap_con,"cn={$username},{$ldaptree}", $info);
         
         // ldap_delete($ldap_con,"l=connected,cn=".$username.",".$ldaptree);

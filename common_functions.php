@@ -98,3 +98,29 @@ function createLDAP() {
     // create/add entry l=connected based on username the user inputed
     ldap_add($ldap[0],"l=connected,cn=".$_SESSION['username'].",".$ldap[1],$info);
 }
+
+function registerUserLDAP() {
+    $ldap = LDAPConnection();
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $info["cn"] = $username;
+    $info["sn"] = $username;
+    $info["objectClass"][0] = "top";
+    $info["objectClass"][1] = "person";
+    $info["objectClass"][2] = "organizationalPerson";
+    $info["objectClass"][3] = "inetOrgPerson";
+    $info["userPassword;lang-en-US"] = "$password";
+    if (!ldap_add($ldap[0],"cn={$username},{$ldap[1]}", $info)) {
+        throw new Exception(ldap_error($ldap[0]));
+    };
+
+    $info2["cn"] = 'devices';
+    $info2["sn"] = 'devices';
+    $info2['l'] = 'devices';
+    $info2["objectClass"][0] = "top";
+    $info2["objectClass"][1] = "person";
+    $info2["objectClass"][2] = "organizationalPerson";
+    $info2["objectClass"][3] = "inetOrgPerson";
+    ldap_add($ldap[0],"l=devices, cn={$username},{$ldap[1]}", $info2);
+    
+}

@@ -93,6 +93,7 @@ checkLDAP();
         </form>
       </div>
     </div>
+    <a href="./register.php" class="createLink">Create an Account</a>
     <div class="snackbar"><?php echo ("IP : ".getIP())?></div>
     <div class="footer">&copy; <?= date('Y'); ?> by Dimas Patriananda</div>
   </body>

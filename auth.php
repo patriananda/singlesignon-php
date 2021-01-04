@@ -45,3 +45,23 @@ if ($_POST["action"] == "loginLDAP") {
         header( "Location: ./login.php");
     }
 }
+
+if ($_POST["action"] == "registerLDAP") {
+    $_SESSION['username'] = $_POST["username"];
+    $_SESSION['password'] = $_POST["password"];
+
+    if (!$_POST["username"]) {
+        $_SESSION['registererror'] = "Field username must not be empty";
+    } else if (!$_POST["password"]) {
+        $_SESSION['registererror'] = "Field password must not be empty";
+    } else if ($_POST["password"] != $_POST["password2"]) {
+        $_SESSION['registererror'] = "Field password must match";
+    } else {
+        $ldap = LDAPConnection();
+        registerUserLDAP();
+        header( "Location: ./login.php");
+        return;
+    }
+
+    header( "Location: ./register.php");
+}

@@ -112,7 +112,8 @@ input:-webkit-autofill:active {
   outline: none;
 }
 
-input[type="submit"] {
+input[type="submit"],
+.createLink {
   background-color: #478fff;
   font-weight: bold;
   color: #f6f6f6;
@@ -134,7 +135,8 @@ input[type="submit"].signin {
   bottom: 30px;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover,
+.createLink:hover {
   background-color: #3c84f5;
 }
 
@@ -209,6 +211,13 @@ label.so {
 
 label.so:hover {
   background-color: #f6504a;
+}
+
+.createLink {
+  position: absolute;
+  top: 150px;
+  left: 153px;
+  box-shadow: 0 8px 25px #95a4bd;
 }
 
 .material-icons {
