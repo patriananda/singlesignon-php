@@ -52,7 +52,7 @@ function checkLDAP() {
     
     // put data value to $value variable and set the index
     foreach ($data as $index => $value) {
-        // if endex value and data type are equals to count, skip the process
+        // if index value and data type are equals to count, skip the process
         if ($index === 'count') {
             continue;
         }
@@ -123,4 +123,27 @@ function registerUserLDAP() {
     $info2["objectClass"][3] = "inetOrgPerson";
     ldap_add($ldap[0],"l=devices, cn={$username},{$ldap[1]}", $info2);
     
+}
+
+function registerDevice() {
+    $ldap = LDAPConnection();
+    $result = ldap_search($ldap[0],$ldap[1], "(&(uid=".getIP().")(sn=".$_SESSION["username"]."))") or die ("Error in search query: ".ldap_error($ldap[0]));
+    $data = ldap_get_entries($ldap[0], $result);
+
+    if ($data['count'] == 0) {
+        $ip = getIP();
+        $username = $_SESSION["username"];
+        $info["cn"] = 'localhost';
+        $info["sn"] = $_SESSION["username"];
+        $info["uid"] = $ip;
+        $info["objectClass"][0] = "top";
+        $info["objectClass"][1] = "person";
+        $info["objectClass"][2] = "organizationalPerson";
+        $info["objectClass"][3] = "inetOrgPerson";
+        ldap_add($ldap[0],"uid={$ip},l=devices, cn={$username},{$ldap[1]}", $info);
+    } else if ($data['count'] >= 1) {        
+        session_start();
+        $_SESSION['devRegistered'] = "Device already registered";
+    }
+        
 }

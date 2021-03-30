@@ -18,7 +18,9 @@ if($ldap_con) {
     if ($ldapbind) {
         echo "LDAP bind successful...<br /><br />";
         
-        $result = ldap_search($ldap_con,$ldaptree, "(l=*)") or die ("Error in search query: ".ldap_error($ldap_con));
+        //*! $result = ldap_search($ldap_con,$ldaptree, "(l=*)") or die ("Error in search query: ".ldap_error($ldap_con));
+    $result = ldap_search($ldap_con,$ldaptree, "(&(uid=127.0.0.1)(sn=edison))") or die ("Error in search query: ".ldap_error($ldap_con));
+
         // $result = ldap_search($ldap_con,$ldaptree, "(uid=127.0.0.1)") or die ("Error in search query: ".ldap_error($ldap[0]));
         // $result = ldap_search($ldap_con,$ldaptree, "(&(l=connected)(sn=".$username."))") or die ("Error in search query: ".ldap_error($ldap[0]));
         // $result = ldap_search($ldap_con,$ldaptree, "(&(l=connected)(sn=tesla))") or die ("Error in search query: ".ldap_error($ldap[0]));
@@ -35,6 +37,9 @@ if($ldap_con) {
         $info["l"] = "connected";
         ldap_add($ldap_con,"l=connected,cn={$username},{$ldaptree}", $info);
         */
+
+        //* create user
+        /*
         $username = "khotim";
         $info["cn"] = $username;
         $info["sn"] = $username;
@@ -45,7 +50,8 @@ if($ldap_con) {
         $info["userPassword"] = "abdul";
         // $info['userPassword'] = '{MD5}'.base64_encode(pack('H*',md5("bell")));
         ldap_add($ldap_con,"cn={$username},{$ldaptree}", $info);
-        
+        */
+
         // ldap_delete($ldap_con,"l=connected,cn=".$username.",".$ldaptree);
 
         // ldap_mod_del($ldap_con, $ldaptree, $data[0]["userpassword"][0]);

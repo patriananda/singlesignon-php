@@ -20,6 +20,11 @@ if ($_POST["action"] == "logoutLDAP") {
     header("location:./login.php");
 }
 
+if ($_POST["action"] == "regDevice") {
+    registerDevice($_SESSION["username"]);
+    header( "Location: ./index.php");
+}
+
 // used in login.php line 36
 if ($_POST["action"] == "login") {
     $_SESSION['username'] = $_POST["username"];

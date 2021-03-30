@@ -2,7 +2,9 @@
 session_start();
 include('common_functions.php');
 
-if (checkUserLDAP($_SESSION['username'])['count'] < 1 || !checkLogin()) {
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : "";
+
+if (checkUserLDAP($username)['count'] < 1 || !checkLogin()) {
   header("location:./login.php");
 }
 $username = ucfirst($_SESSION['username']);
@@ -28,6 +30,13 @@ $username = ucfirst($_SESSION['username']);
           <input class="signout" type="submit" name="signout" value="Sign out" />
       </form>
     </div>
+    <?php if(isset($_SESSION['devRegistered']) && $_SESSION['devRegistered']) : ?>
+      <div class="warning"><label> <?php echo $_SESSION['devRegistered'] ?> </label></div>
+    <?php endif; ?>
+    <form action="auth.php" method="post">
+          <input type="hidden" name="action" value="regDevice" />
+          <input class="signin" type="submit" name="regDevice" value="Register Device" />
+    </form>
     <div class="footer">&copy; <?= date('Y'); ?> by Dimas Patriananda</div>
   </body>
 </html>
